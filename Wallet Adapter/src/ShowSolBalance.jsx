@@ -1,21 +1,34 @@
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { useState, useEffect } from "react";
 
 export function ShowSolBalance() {
   const { connection } = useConnection();
   const wallet = useWallet();
+  const [balance, setBalance] = useState(null);
 
-  async function getBalance() {
-    if (wallet.publicKey) {
-      const balance = await connection.getBalance(wallet.publicKey);
-      document.getElementById("balance").innerHTML = balance / LAMPORTS_PER_SOL;
+  useEffect(() => {
+    async function fetchBalance() {
+      if (wallet.publicKey) {
+        try {
+          const balance = await connection.getBalance(wallet.publicKey);
+          setBalance(balance / LAMPORTS_PER_SOL);
+        } catch (error) {
+          console.error("Failed to fetch balance", error);
+        }
+      }
     }
+
+    fetchBalance();
+  }, [connection, wallet.publicKey]); // Fetch balance when wallet or connection changes
+
+  if (!wallet.publicKey) {
+    return <p>Please connect your wallet to see the balance.</p>;
   }
 
-  getBalance();
   return (
     <div>
-      <p>SOL Balance:</p> <div id="balance"></div>
+      <p>SOL Balance: {balance !== null ? balance : "Loading..."}</p>
     </div>
   );
 }
