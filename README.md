@@ -27,8 +27,8 @@ Before running the application, ensure you have the following installed:
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/yourusername/solana-wallet-dapp.git
-cd solana-wallet-dapp
+git clone https://github.com/BROCODES2024/Wallet-Adapter.git
+cd Wallet-Adapter
 ```
 
 ### Install Dependencies
