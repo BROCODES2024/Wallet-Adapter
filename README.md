@@ -38,7 +38,7 @@ npm install
 
 ### Start the Application
 ```bash
-npm start
+npm run dev
 ```
 This will launch the DApp on `http://localhost:3000/`.
 
